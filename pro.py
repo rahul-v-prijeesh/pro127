@@ -13,15 +13,15 @@ def scrape():
     stardata=[]
     for i in range(0,428):
         soup=BeautifulSoup(browser.page_source,"html.parser")
-        for ultag in soup.find_all("tr"):
-            litags=ultag.find_all("td")
+        for trtag in soup.find_all("tr"):
+            tdtags=ultag.find_all("td")
             templist=[]
-            for index,litag in enumerate(litags):
+            for index,litag in enumerate(tdtags):
                 if index==1:
-                    templist.append(litag.find_all("a")[0].contents[0])
+                    templist.append(tdtag.find_all("a")[0].contents[0])
                 else:
                     try:
-                        templist.append(litag.contents[0])
+                        templist.append(tdtag.contents[0])
                     except:
                         templist.append("")
             stardata.append(templist)
