@@ -31,7 +31,7 @@ def scrape():
                      radius.append(tdtag.contents[0])   
                  
             stardata.append([name,distance,mass,radius])
-        browser.find_element_by_xpath("//*[@id=primary_coloumn]/footer/div/div/div/nav/span[2]/a").click()
+        #browser.find_element_by_xpath("//*[@id=primary_coloumn]/footer/div/div/div/nav/span[2]/a").click()
     with open("star.csv",'w') as f:
         csvwriter=csv.writer(f)
         csvwriter.writerow(headers)
