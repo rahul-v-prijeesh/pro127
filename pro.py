@@ -1,3 +1,4 @@
+from unicodedata import name
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -9,25 +10,31 @@ browser=webdriver.Chrome("Z:\app\class127\chromedriver")
 browser.get(START_URL)
 time.sleep(10)
 def scrape():
-    headers=["V mag","name","bayer","distance","class","mass","radius","luminosity"]
+    headers=["name","distance","mass","radius"]
     stardata=[]
     for i in range(0,428):
         soup=BeautifulSoup(browser.page_source,"html.parser")
         for trtag in soup.find_all("tr"):
-            tdtags=ultag.find_all("td")
-            templist=[]
-            for index,litag in enumerate(tdtags):
+            tdtags=trtag.find_all("td")
+            name=[]
+            distance=[]
+            mass=[]
+            radius=[]
+            for index,tdtag in enumerate(tdtags):
                 if index==1:
-                    templist.append(tdtag.find_all("a")[0].contents[0])
-                else:
-                    try:
-                        templist.append(tdtag.contents[0])
-                    except:
-                        templist.append("")
-            stardata.append(templist)
+                    name.append(tdtag.contents[0])
+                elif index==3:
+                     distance.append(tdtag.contents[0])
+                elif index==5:
+                     mass.append(tdtag.contents[0])
+                elif index==6:
+                     radius.append(tdtag.contents[0])   
+                 
+            stardata.append([name,distance,mass,radius])
         browser.find_element_by_xpath("//*[@id=primary_coloumn]/footer/div/div/div/nav/span[2]/a").click()
     with open("star.csv",'w') as f:
         csvwriter=csv.writer(f)
         csvwriter.writerow(headers)
         csvwriter.writerows(stardata)
 scrape()
+
